@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.avs.meldeschein.de/ns/" xmlns:ms="http://www.avs.meldeschein.de/ns/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:avs="http://www.avs.de/ns/">
+	<xsd:include schemaLocation="./meldeschein_datentypen.xsd"/>
+
+	<!-- Tag zum Buchen vom Meldeschein -->
+	<xsd:element name="meldescheine">
+		<xsd:complexType>
+			<xsd:sequence>
+				<!-- Request Tag  zur Identifikation des WS-Users-->
+				<xsd:element name="identifikation" type="ms:cIdentifikation"/>
+				<!-- Response Tag  fuer Statusmeldungen (Fehler und Erfolgsmeldung)-->
+				<xsd:element name="fehlermeldungen" type="ms:cFehlermeldungen" minOccurs="0"/>
+				<xsd:element minOccurs="1" maxOccurs="1" name="meldeschein" type="ms:cMs" form="qualified"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- Tag zum Buchen vom Meldeschein -->
+	<xsd:element name="meldeschein" type="ms:cMs"/>
+
+
+	<xsd:complexType name="cMs">
+		<xsd:sequence>
+			<!-- Buchungsnummer aus Hotelsoftware -->
+			<xsd:element name="buchungsnummer" type="ms:sBuchungsnummer"/>
+			<!-- Kennzeichen ob es ein manueller oder ein online-Meldeschein gebucht werden soll. Siehe dazu Dokumentation. (Abhaengig von der Firma) -->
+			<xsd:element name="kz_manuelle_ms" type="xsd:boolean" minOccurs="0"/>
+			<!-- wird vom Meldeschein-System vergeben -->
+			<xsd:element minOccurs="0" name="meldescheinnummer" type="ms:sMsnr"/>
+			<!-- Firma-Id, ueber diese wird der Bezug zur Firma hergestellt -->
+			<xsd:element name="firmaid" type="ms:sFirmaid" minOccurs="0" nillable="false"/>
+			<!-- Objekt-Id, ueber diese wird der Bezug zum Objekt hergestellt -->
+			<xsd:element name="objektid" type="ms:sObjektid" minOccurs="0" nillable="false"/>
+			<!-- Berechnungs-Parameter! Anreise des Hauptreisenden -->
+			<xsd:element name="anreise" type="ms:sAnreise"/>
+			<!-- Berechnungs-Parameter! Abreise des Hauptreisenden -->
+			<xsd:element name="abreise" type="ms:sAbreise"/>
+			<!-- Berechnungs-Parameter! Kategorie des Hauptreisenden. Siehe dazu WS-Methode CONFIG-L-KAT -->
+			<xsd:element name="kategorieid" type="ms:sKategorieId"/>
+			<!-- Anrede des Hauptreisenden. Siehe dazu WS-Methode CONFIG-L-ANREDE -->
+			<xsd:element minOccurs="0" name="anredeid" type="ms:sAnredeId"/>
+			<!-- Nachname des Hauptreisenden -->
+			<xsd:element name="name" type="ms:sName"/>
+			<!-- Vorname des Hauptreisenden -->
+			<xsd:element minOccurs="0" name="vorname" type="ms:sName"/>
+			<!-- Strasse des Hauptreisenden. Begleitpersonen haben keine Adresse im jMeldeschein System -->
+			<xsd:element minOccurs="0" name="strasse" type="ms:sStrasse"/>
+			<!-- Hausnummer des Hauptreisenden. -->
+			<xsd:element minOccurs="0" name="hausnummer" type="ms:sHausnummer"/>
+			<!-- Postleitzahl des Hauptreisenden. -->
+			<xsd:element minOccurs="0" name="plz" type="ms:sPlz"/>
+			<!-- Ort des Hauptreisenden -->
+			<xsd:element minOccurs="0" name="ort" type="ms:sOrt"/>
+			<!-- Herkunktsland des Hauptreisenden. Kann entweder land-Id gefuellt werden, dazu siehe CONFIG-L-LAND, oder der TAG: LAND.
+		Siehe dazu Dokumentation -->
+			<xsd:element minOccurs="0" name="landid" type="xsd:long"/>
+			<!-- Herkunftsland des Hauptreisenden. -->
+			<xsd:element name="land" type="ms:cLand" minOccurs="0"/>
+			<!-- Nationalitaet des Hauptreisenden. Siehe Kommentar landId -->
+			<xsd:element minOccurs="0" name="staatsangehoerigkeitid" type="xsd:long"/>
+			<xsd:element name="staatsangehoerigkeit" type="ms:cLand" minOccurs="0"/>
+			<!-- Ausweisnummer des Hauptreisenden. Nicht zu verwechseln mit weitere_angaben!!! -->
+			<xsd:element minOccurs="0" name="ausweisnr" type="xsd:string"/>
+			<!-- Weiter Angaben zur Hauptperson -->
+			<xsd:element minOccurs="0" name="weitere_angaben" type="xsd:string"/>
+			<!-- KFZ-Kennzeichen des Hauptreisenden -->
+			<xsd:element minOccurs="0" name="kfzkennzeichen" type="xsd:string"/>
+			<!-- Geburtsdatum des Hauptreisenden. Muss zusammenpassen mit der Kategorie_id (Mindestalter, Maximalalter) -->
+			<xsd:element minOccurs="0" name="geburtsdatum" type="ms:sGeburtsdatum"/>
+			<!-- Response! errechneter Betrag des GESAMTEN Meldescheins-->
+			<xsd:element minOccurs="0" name="betrag" type="ms:sBetrag"/>
+			<!-- Wird verwendet um Meldescheine zu stornieren. Dazu siehe Dokumentation -->
+			<xsd:element name="abrechnungstatusid" type="ms:sAbrechnungstatusId" minOccurs="0"/>
+			<!-- Kategoriebedingte Zusatzfelder. -->
+			<xsd:element name="zusatzfelder" type="ms:cMeldescheinZusatzfelder" minOccurs="0"/>
+			<!-- Individuelle Zusatzfelder -->
+			<xsd:element name="indiv-zusatzfelder" type="ms:cIndivZusatzfelder" maxOccurs="unbounded" minOccurs="0"/>
+			<!--Uebernachtungsentgelt. Wird benoetigt fuer eine etwaige Berechnung der Bettensteuer-->
+			<xsd:element minOccurs="0" name="ue-e-gelt" type="ms:sBetrag"/>
+			<xsd:choice>
+				<!-- Es kann entweder Tag begleitperson oder Tag begleitgruppe verwendet werden. Wird das Letzte verwendet, wird der MS-Typ automatisch
+			auf Gruppenmeldeschein gesetzt. -->
+				<!-- Begleitpersonen -->
+				<xsd:element minOccurs="0" maxOccurs="unbounded" name="begleitperson" type="ms:cBegleitperson"/>
+				<!-- Gruppenreisende-->
+				<xsd:element name="begleitgruppe" type="ms:cBegleitgruppe" maxOccurs="unbounded" minOccurs="0"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Tag zum Holen vom Meldeschein -->
+	<xsd:element name="holeMeldeschein">
+		<!-- Suchkriterien fuer Meldescheine -->
+		<xsd:complexType>
+			<xsd:sequence>
+				<!-- Request Tag  zur Identifikation des WS-Users-->
+				<xsd:element name="identifikation" type="ms:cIdentifikation"/>
+				<!-- Request Tag  Nach was soll gesucht werden! -->
+				<xsd:element name="anfragedaten">
+					<xsd:complexType>
+						<xsd:choice>
+							<!-- Request Tag Holen eines Meldescheines ist moeglich mit der vom MS-Buchen erhaltenen Meldescheinnummer oder
+					mit der Buchungsnummer UND ObjektId -->
+							<xsd:element name="meldescheinnummer" type="ms:sMsnr"/>
+							<xsd:sequence>
+								<xsd:element name="buchungsnummer" type="ms:sBuchungsnummer"/>
+								<xsd:element name="objektid" type="ms:sObjektidInt" minOccurs="0" nillable="false"/>
+							</xsd:sequence>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="fehlermeldungen" type="ms:cFehlermeldungen" minOccurs="0"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="meldeschein" type="ms:cMs" form="qualified"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+	<xsd:element name="holeMeldescheineRequest">
+		<!-- Suchkriterien fuer Meldescheine -->
+		<!-- Deprecated! Stattdessen soll holeMeldeschein verwendet werden -->
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="identifikation" type="ms:cIdentifikation"/>
+				<xsd:element name="anfragedaten" minOccurs="0">
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element name="buchungsnummer" type="ms:sBuchungsnummer"/>
+							<xsd:element name="meldescheinnummer" type="ms:sMsnr"/>
+							<!-- Entspricht dem Tag Kurverwaltung in Identifikation -->
+							<xsd:element name="ort-id" type="ms:sOrtId"/>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+	<xsd:element name="holeMeldescheineResponse">
+		<!-- Suchkriterien fuer Meldescheine -->
+		<!-- Deprecated. Sattdessen soll hole Meldeschein verwendet werden -->
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="fehlermeldungen" type="ms:cFehlermeldungen" minOccurs="1"/>
+				<xsd:element minOccurs="0" maxOccurs="unbounded" name="meldescheine" type="ms:cMeldeschein"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- Tag zum Drucken von Meldescheinen -->
+	<xsd:element name="druckeMeldescheineRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="identifikation" type="ms:cIdentifikation"/>
+				<xsd:element name="meldeschein" minOccurs="1" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<!-- Aus dem MS-Buchen erhaltene Meldescheinnummer-->
+							<xsd:element name="meldescheinnummer" type="ms:sMsnr"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- Tag zum Drucken von Meldescheinen -->
+	<xsd:element name="druckeMeldescheineResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="version" type="ms:sVersion" minOccurs="0"/>
+				<xsd:element name="fehlermeldungen" type="ms:cFehlermeldungen" minOccurs="1"/>
+				<!-- PDF als Bytestream. Dazu siehe Dokumentation -->
+				<xsd:element minOccurs="0" maxOccurs="1" name="ms-pdf" type="ms:sBinaerdaten"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
