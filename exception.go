@@ -1,4 +1,4 @@
-package guestline
+package meldeschein
 
 type ExceptionBlock struct {
 	ExceptionCode        string `xml:"ExceptionCode"`

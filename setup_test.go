@@ -1,4 +1,4 @@
-package guestline_test
+package meldeschein_test
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	guestline "github.com/omniboost/go-guestline"
+	guestline "github.com/omniboost/go-avs-meldeschein"
 )
 
 var (
@@ -17,9 +17,7 @@ func TestMain(m *testing.M) {
 	var err error
 
 	baseURLString := os.Getenv("BASE_URL")
-	siteID := os.Getenv("SITE_ID")
-	interfaceID := os.Getenv("INTERFACE_ID")
-	operatorCode := os.Getenv("OPERATOR_CODE")
+	username := os.Getenv("USERNAME")
 	password := os.Getenv("PASSWORD")
 	debug := os.Getenv("DEBUG")
 	var baseURL *url.URL
@@ -31,7 +29,7 @@ func TestMain(m *testing.M) {
 		}
 	}
 
-	client = guestline.NewClient(nil, siteID, interfaceID, operatorCode, password)
+	client = guestline.NewClient(nil, username, password)
 	if debug != "" {
 		client.SetDebug(true)
 	}

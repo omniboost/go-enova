@@ -1,4 +1,4 @@
-package guestline
+package meldeschein
 
 import "net/url"
 

@@ -1,4 +1,4 @@
-package guestline
+package meldeschein
 
 import (
 	"bytes"
@@ -15,13 +15,12 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/hashicorp/go-multierror"
 	"github.com/pkg/errors"
 )
 
 const (
 	libraryVersion = "0.0.1"
-	userAgent      = "go-guestline/" + libraryVersion
+	userAgent      = "go-avs-meldeschein/" + libraryVersion
 	mediaType      = "text/xml"
 	charset        = "utf-8"
 )
@@ -29,13 +28,13 @@ const (
 var (
 	BaseURL = url.URL{
 		Scheme: "https",
-		Host:   "pmsws.eu.guestline.net",
-		Path:   "/RLXSoapRouter",
+		Host:   "meldeschein.avs.de",
+		Path:   "/meldeschein-ws-prod/JMeldescheinWebservices",
 	}
 )
 
 // NewClient returns a new Exact Globe Client client
-func NewClient(httpClient *http.Client, siteID, interfaceID, operatorCode, password string) *Client {
+func NewClient(httpClient *http.Client, username, password string) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
 	}
@@ -43,9 +42,7 @@ func NewClient(httpClient *http.Client, siteID, interfaceID, operatorCode, passw
 	client := &Client{}
 
 	client.SetHTTPClient(httpClient)
-	client.SetSiteID(siteID)
-	client.SetInterfaceID(interfaceID)
-	client.SetOperatorCode(operatorCode)
+	client.SetUsername(username)
 	client.SetPassword(password)
 	client.SetBaseURL(BaseURL)
 	client.SetDebug(false)
@@ -65,12 +62,8 @@ type Client struct {
 	baseURL url.URL
 
 	// credentials
-	siteID       string
-	interfaceID  string
-	operatorCode string
-	password     string
-
-	sessionID string
+	username string
+	password string
 
 	// User agent for client
 	userAgent string
@@ -97,28 +90,12 @@ func (c *Client) SetDebug(debug bool) {
 	c.debug = debug
 }
 
-func (c Client) SiteID() string {
-	return c.siteID
+func (c Client) Username() string {
+	return c.username
 }
 
-func (c *Client) SetSiteID(siteID string) {
-	c.siteID = siteID
-}
-
-func (c Client) InterfaceID() string {
-	return c.interfaceID
-}
-
-func (c *Client) SetInterfaceID(interfaceID string) {
-	c.interfaceID = interfaceID
-}
-
-func (c Client) OperatorCode() string {
-	return c.operatorCode
-}
-
-func (c *Client) SetOperatorCode(operatorCode string) {
-	c.operatorCode = operatorCode
+func (c *Client) SetUsername(username string) {
+	c.username = username
 }
 
 func (c Client) Password() string {
@@ -201,9 +178,8 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	if req.RequestBodyInterface() != nil {
 		soapRequest := RequestEnvelope{
 			Namespaces: []xml.Attr{
-				{Name: xml.Name{Space: "", Local: "xmlns:xsi"}, Value: "http://www.w3.org/2001/XMLSchema-instance"},
-				{Name: xml.Name{Space: "", Local: "xmlns:xsd"}, Value: "http://www.w3.org/2001/XMLSchema"},
 				{Name: xml.Name{Space: "", Local: "xmlns:soap"}, Value: "http://schemas.xmlsoap.org/soap/envelope/"},
+				{Name: xml.Name{Space: "", Local: "xmlns:ns"}, Value: "http://www.avs.meldeschein.de/ns/"},
 			},
 			// Header: Header{},
 			Body: Body{
@@ -241,11 +217,15 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 		r = r.WithContext(ctx)
 	}
 
+	r.SetBasicAuth(c.Username(), c.Password())
+
 	// set other headers
 	r.Header.Add("Content-Type", fmt.Sprintf("%s; charset=%s", c.MediaType(), c.Charset()))
 	r.Header.Add("Accept", c.MediaType())
 	r.Header.Add("User-Agent", c.UserAgent())
 	// r.Header.Add("SOAPAction", fmt.Sprintf("http://tempuri.org/RLXSOAP19/RLXSOAP19/%s", req.SOAPAction()))
+	// r.Header.Add("SOAPAction", "urn:oracle:getKonfigurationsListe")
+	// r.Header.Add("SOAPAction", "urn:oracle:holeMeldescheine")
 
 	return r, nil
 }
@@ -302,9 +282,15 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 		},
 	}
 
-	err = c.Unmarshal(httpResp.Body, &soapResponse)
+	soapError := SoapError{}
+
+	err = c.Unmarshal(httpResp.Body, &soapResponse, &soapError)
 	if err != nil {
 		return httpResp, err
+	}
+
+	if soapError.Body.Fault.FaultCode != "" || soapError.Body.Fault.FaultString != "" {
+		return httpResp, &ErrorResponse{Response: httpResp, Err: soapError}
 	}
 
 	// if len(errorResponse.Messages) > 0 {
@@ -347,30 +333,6 @@ func (c *Client) Unmarshal(r io.Reader, vv ...interface{}) error {
 	return nil
 }
 
-func (c *Client) SessionID() (string, error) {
-	// fetch a new token if it isn't set already
-	if c.sessionID == "" {
-		var err error
-		c.sessionID, err = c.NewSessionID()
-		if err != nil {
-			return "", err
-		}
-	}
-
-	return c.sessionID, nil
-}
-
-func (c *Client) NewSessionID() (string, error) {
-	req := c.NewLoginRequest()
-	resp, err := req.Do()
-	if err != nil {
-		return "", err
-	}
-
-	return resp.SessionID, nil
-
-}
-
 // CheckResponse checks the Client response for errors, and returns them if
 // present. A response is considered an error if it has a status code outside
 // the 200 range. Client error responses are expected to have either no response
@@ -387,6 +349,10 @@ func CheckResponse(r *http.Response) error {
 
 	if c := r.StatusCode; c >= 200 && c <= 299 {
 		return nil
+	}
+
+	if r.StatusCode == 401 {
+		return errors.New("401: Unauthorized")
 	}
 
 	// read data and copy it back
@@ -411,11 +377,46 @@ func CheckResponse(r *http.Response) error {
 		return errors.WithStack(err)
 	}
 
-	if errorResponse.Code != 0 {
-		return errorResponse
-	}
-
 	return nil
+}
+
+// <?xml version="1.0" encoding="UTF-8"?>
+// <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+//   <S:Body>
+//     <ns0:holeMeldescheineResponse xmlns:ns0="http://www.avs.meldeschein.de/ns/">
+//       <fehlermeldungen>
+//         <fehler>
+//           <code>10000</code>
+//           <beschreibung>Unerwarteter technischer Fehler!</beschreibung>
+//           <bezug>Meldeschein-Buchungsnummer: 10820</bezug>
+//         </fehler>
+//       </fehlermeldungen>
+//     </ns0:holeMeldescheineResponse>
+//   </S:Body>
+// </S:Envelope>
+
+// <?xml version="1.0" encoding="UTF-8"?>
+// <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+//   <S:Body>
+//     <ns0:Fault xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2003/05/soap-envelope">
+//       <faultcode>ns0:Client</faultcode>
+//       <faultstring>Verteilungsmethode für {}holeMeldescheineRequest kann nicht gefunden werden</faultstring>
+//     </ns0:Fault>
+//   </S:Body>
+// </S:Envelope>
+
+type SoapError struct {
+	XMLName xml.Name `xml:"Envelope"`
+	Body    struct {
+		Fault struct {
+			FaultCode   string `xml:"faultcode"`
+			FaultString string `xml:"faultstring"`
+		} `xml:"Fault"`
+	} `xml:"Body"`
+}
+
+func (e SoapError) Error() string {
+	return fmt.Sprintf("%s: %s", e.Body.Fault.FaultCode, e.Body.Fault.FaultString)
 }
 
 type ErrorResponse struct {
@@ -423,35 +424,11 @@ type ErrorResponse struct {
 	Response *http.Response
 
 	// HTTP status code
-	Status             int                `json:"status"`
-	Code               int                `json:"code"`
-	Message            string             `json:"message"`
-	Link               string             `json:"link"`
-	DeveloperMessage   string             `json:"developerMessage"`
-	ValidationMessages ValidationMessages `json:"validationMessages"`
-	RequestID          string             `json:"requestId"`
-}
-
-type ValidationMessages []ValidationMessage
-
-type ValidationMessage struct {
-	Field   string `json:"field"`
-	Message string `json:"message"`
-	Path    string `json:"path"`
-	RootID  string `json:"rootId"`
+	Err error
 }
 
 func (r *ErrorResponse) Error() string {
-	var errs *multierror.Error
-	for _, m := range r.ValidationMessages {
-		e := errors.Errorf("%s: %s", m.Field, m.Message)
-		errs = multierror.Append(errs, e)
-	}
-
-	if errs == nil {
-		return ""
-	}
-	return errs.Error()
+	return r.Err.Error()
 }
 
 func checkContentType(response *http.Response) error {
