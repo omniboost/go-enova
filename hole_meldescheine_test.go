@@ -14,6 +14,7 @@ func TestGetMeldescheine(t *testing.T) {
 	// req.RequestBody().Identifikation.Benutzerid = 1
 	req.RequestBody().Identifikation.Verarbeitung = "MS-HOLEN"
 	req.RequestBody().AnfrageDaten.Meldescheinnummer = "39899"
+	req.RequestBody().AnfrageDaten.OrtID = 263
 	// req.RequestBody().ArrivalDate = guestline.DateTime{time.Now().AddDate(0, 0, -7)}
 	resp, err := req.Do()
 	if err != nil {

@@ -96,7 +96,7 @@ type GetMeldescheinRequestBody struct {
 		// You have a CHOICE of the next 3 items at this level
 		Buchungsnummer    string `xml:"buchungsnummer,omitempty"`
 		Meldescheinnummer string `xml:"meldescheinnummer,omitempty"`
-		OrtID             string `xml:"ort-id,omitempty"`
+		OrtID             int    `xml:"ort-id,omitempty"`
 	} `xml:"anfragedaten"`
 }
 
@@ -121,6 +121,7 @@ type GetMeldescheinResponseBody struct {
 
 	Identifikation  Identifikation  `xml:"identifikation"`
 	Fehlermeldungen Fehlermeldungen `xml:"fehlermeldungen"`
+	Meldeschein     Meldeschein     `xml:"meldeschein"`
 }
 
 func (r *GetMeldeschein) URL() *url.URL {
