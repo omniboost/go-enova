@@ -1,5 +1,7 @@
 package meldeschein
 
+import "fmt"
+
 type Identifikation struct {
 	Erzeugung     Date   `xml:"erzeugung"`
 	Schnittstelle string `xml:"schnittstelle"`
@@ -8,12 +10,16 @@ type Identifikation struct {
 	Verarbeitung  string `xml:"verarbeitung"`
 }
 
-type Fehlermeldungen struct {
-	Fehler struct {
-		Code         string `xml:"code"`
-		Beschreibung string `xml:"beschreibung"`
-		Bezug        string `xml:"bezug"`
-	} `xml:"fehler"`
+type Fehlermeldungen []Fehler
+
+type Fehler struct {
+	Code         string `xml:"code"`
+	Beschreibung string `xml:"beschreibung"`
+	Bezug        string `xml:"bezug"`
+}
+
+func (f Fehler) Error() string {
+	return fmt.Sprintf("%s: %s (%s)", f.Bezug, f.Beschreibung, f.Code)
 }
 
 type Meldeschein struct {
@@ -39,11 +45,11 @@ type Meldeschein struct {
 	Kfzkennzeichen         string               `xml:"kfzkennzeichen"`
 	Geburtsdatum           Date                 `xml:"geburtsdatum"`
 	Begleitperson          []struct {
-		AnredeID     string `xml:"anredeid"`
+		AnredeID     int    `xml:"anredeid"`
 		Name         string `xml:"name"`
 		Vorname      string `xml:"vorname"`
 		Geburtsdatum string `xml:"geburtsdatum"`
-		KategorieID  string `xml:"kategorieid"`
+		KategorieID  int    `xml:"kategorieid"`
 		Anreise      Date   `xml:"anreise"`
 		Abreise      Date   `xml:"abreise"`
 		Ausweisnr    string `xml:"ausweisnr"`

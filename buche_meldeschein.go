@@ -115,7 +115,7 @@ type PostMeldescheinResponseBody struct {
 	XMLName xml.Name `xml:"meldescheine"`
 
 	Identifikation  Identifikation  `xml:"identifikation"`
-	Fehlermeldungen Fehlermeldungen `xml:"fehlermeldungen"`
+	Fehlermeldungen Fehlermeldungen `xml:"fehlermeldungen>fehler"`
 }
 
 func (r *PostMeldeschein) URL() *url.URL {
@@ -140,5 +140,13 @@ func (r *PostMeldeschein) Do() (PostMeldescheinResponseBody, error) {
 
 	responseBody := r.NewResponseBody()
 	_, err = r.client.Do(req, responseBody)
-	return *responseBody, err
+	if err != nil {
+		return *responseBody, err
+	}
+
+	if len(responseBody.Fehlermeldungen) > 0 {
+		return *responseBody, responseBody.Fehlermeldungen[0]
+	}
+
+	return *responseBody, nil
 }
