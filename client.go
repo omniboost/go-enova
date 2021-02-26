@@ -20,7 +20,7 @@ import (
 
 const (
 	libraryVersion = "0.0.1"
-	userAgent      = "go-avs-meldeschein/" + libraryVersion
+	userAgent      = "go-cardxperts/" + libraryVersion
 	mediaType      = "text/xml"
 	charset        = "utf-8"
 )

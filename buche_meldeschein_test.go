@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	meldeschein "github.com/omniboost/go-avs-meldeschein"
+	meldeschein "github.com/omniboost/go-cardxperts"
 )
 
 func TestPostMeldeschein(t *testing.T) {

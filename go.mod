@@ -1,4 +1,4 @@
-module github.com/omniboost/go-avs-meldeschein
+module github.com/omniboost/go-cardxperts
 
 go 1.15
 

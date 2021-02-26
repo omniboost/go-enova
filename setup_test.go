@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	guestline "github.com/omniboost/go-avs-meldeschein"
+	guestline "github.com/omniboost/go-cardxperts"
 )
 
 var (

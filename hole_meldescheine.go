@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/omniboost/go-avs-meldeschein/utils"
+	"github.com/omniboost/go-cardxperts/utils"
 )
 
 func (c *Client) NewGetMeldescheine() GetMeldescheine {
