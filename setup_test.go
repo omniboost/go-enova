@@ -6,11 +6,11 @@ import (
 	"os"
 	"testing"
 
-	guestline "github.com/omniboost/go-cardxperts"
+	cardxperts "github.com/omniboost/go-cardxperts"
 )
 
 var (
-	client *guestline.Client
+	client *cardxperts.Client
 )
 
 func TestMain(m *testing.M) {
@@ -29,7 +29,7 @@ func TestMain(m *testing.M) {
 		}
 	}
 
-	client = guestline.NewClient(nil, username, password)
+	client = cardxperts.NewClient(nil, username, password)
 	if debug != "" {
 		client.SetDebug(true)
 	}

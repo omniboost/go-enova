@@ -28,8 +28,8 @@ const (
 var (
 	BaseURL = url.URL{
 		Scheme: "https",
-		Host:   "meldeschein.avs.de",
-		Path:   "/meldeschein-ws-prod/JMeldescheinWebservices",
+		Host:   "www.cardxperts.net",
+		Path:   "/cardxcontrol/system/hotelxml.asmx",
 	}
 )
 
@@ -179,7 +179,7 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 		soapRequest := RequestEnvelope{
 			Namespaces: []xml.Attr{
 				{Name: xml.Name{Space: "", Local: "xmlns:soap"}, Value: "http://schemas.xmlsoap.org/soap/envelope/"},
-				{Name: xml.Name{Space: "", Local: "xmlns:ns"}, Value: "http://www.avs.meldeschein.de/ns/"},
+				{Name: xml.Name{Space: "", Local: "xmlns:car"}, Value: "http://www.cardxperts.net"},
 			},
 			// Header: Header{},
 			Body: Body{
