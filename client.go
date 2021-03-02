@@ -1,4 +1,4 @@
-package meldeschein
+package cardxperts
 
 import (
 	"bytes"

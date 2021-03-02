@@ -1,4 +1,4 @@
-package meldeschein
+package cardxperts
 
 type ExceptionBlock struct {
 	ExceptionCode        string `xml:"ExceptionCode"`

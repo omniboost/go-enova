@@ -1,4 +1,4 @@
-package meldeschein_test
+package cardxperts_test
 
 import (
 	"log"

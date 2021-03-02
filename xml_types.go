@@ -1,4 +1,4 @@
-package meldeschein
+package cardxperts
 
 import (
 	"encoding/json"
@@ -16,8 +16,22 @@ func (d Date) MarshalSchema() string {
 	return d.Time.Format("2006-01-02")
 }
 
-func (d Date) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	return e.EncodeElement(d.Time.Format("2006-01-02"), start)
+func (d Date) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	if d.Time.IsZero() {
+		return nil
+	}
+	return enc.EncodeElement(d.Time.Format("2006-01-02"), start)
+}
+
+func (d Date) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	f := d.Time.Format("2006-01-02")
+	if d.Time.IsZero() {
+		f = ""
+	}
+	return xml.Attr{
+		Name:  name,
+		Value: f,
+	}, nil
 }
 
 func (d *Date) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
