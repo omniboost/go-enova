@@ -21,7 +21,7 @@ import (
 const (
 	libraryVersion = "0.0.1"
 	userAgent      = "go-cardxperts/" + libraryVersion
-	mediaType      = "text/xml"
+	mediaType      = "application/soap+xml;charset=UTF-8"
 	charset        = "utf-8"
 )
 
@@ -178,7 +178,7 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	if req.RequestBodyInterface() != nil {
 		soapRequest := RequestEnvelope{
 			Namespaces: []xml.Attr{
-				{Name: xml.Name{Space: "", Local: "xmlns:soap"}, Value: "http://schemas.xmlsoap.org/soap/envelope/"},
+				{Name: xml.Name{Space: "", Local: "xmlns:soap"}, Value: "http://www.w3.org/2003/05/soap-envelope"},
 				{Name: xml.Name{Space: "", Local: "xmlns:car"}, Value: "http://www.cardxperts.net"},
 			},
 			// Header: Header{},
@@ -216,8 +216,6 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	if ctx != nil {
 		r = r.WithContext(ctx)
 	}
-
-	r.SetBasicAuth(c.Username(), c.Password())
 
 	// set other headers
 	r.Header.Add("Content-Type", fmt.Sprintf("%s; charset=%s", c.MediaType(), c.Charset()))

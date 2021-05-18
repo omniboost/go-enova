@@ -81,7 +81,7 @@ func (r *MeldedatenRequest) Method() string {
 func (r MeldedatenRequest) NewRequestBody() MeldedatenRequestBody {
 	return MeldedatenRequestBody{
 		Meldedaten: Meldedaten{
-			Version: "2.0",
+			Version: "5",
 		},
 	}
 }
@@ -131,6 +131,12 @@ type MeldedatenRequestResponseBody struct {
 	Error struct {
 		Fehlertext string `xml:"Fehlertext,attr"`
 	} `xml:"MeldedatenResult>error"`
+	NewDataSet struct {
+		Return struct {
+			Number      int    `xml:"Number"`
+			Description string `xml:"Description"`
+		}
+	} `xml:"MeldedatenResult>NewDataSet"`
 }
 
 func (r *MeldedatenRequest) URL() *url.URL {

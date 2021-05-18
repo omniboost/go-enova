@@ -13,16 +13,17 @@ import (
 func TestMeldedaten(t *testing.T) {
 	req := client.NewMeldedatenRequest()
 	// req.RequestBody().Identifikation.Erzeugung = "2020-02-02"
-	req.RequestBody().Meldedaten.Oestat = "99999"
+	req.RequestBody().Meldedaten.Oestat = os.Getenv("OESTAT")
 	req.RequestBody().Meldedaten.Logindaten = cardxperts.Logindaten{
 		User:     client.Username(),
 		Mandant:  os.Getenv("MANDANT"),
 		Passwort: client.Password(),
 	}
 	req.RequestBody().Meldedaten.Betrieb = cardxperts.Betrieb{
-		Betriebnr: "1501",
+		Betriebnr: os.Getenv("BETRIEBNR"),
 		Meldeblatt: cardxperts.Meldeblatt{
-			Mblattnr:  "11001",
+			// Mblattnr:  "11001",
+			ResID:     "",
 			Abgeplant: cardxperts.Date{Time: time.Now()},
 			Angeplant: cardxperts.Date{Time: time.Now()},
 			Landschl: cardxperts.Landschl{

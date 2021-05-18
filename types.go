@@ -28,6 +28,7 @@ type Betrieb struct {
 
 type Meldeblatt struct {
 	Mblattnr    string `xml:"mblattnr,attr"`
+	ResID       string `xml:"resid,attr"`
 	Angeplant   Date   `xml:"angeplant,attr"`
 	Ankunft     Date   `xml:"ankunft,attr,omitempty"`
 	Abreise     Date   `xml:"abreise,attr"`
@@ -35,7 +36,6 @@ type Meldeblatt struct {
 	Bearbeiter  string `xml:"bearbeiter,attr"`
 	Bemerkung   string `xml:"bemerkung,attr"`
 	Aufenthalte string `xml:"aufenthalte,attr"`
-	ResID       string `xml:"resid,attr"`
 
 	Undef3 string `xml:"undef3,attr,omitempty"`
 	Undef2 string `xml:"undef2,attr,omitempty"`

@@ -83,6 +83,9 @@ func (r ListGastarten) NewRequestBody() ListGastartenBody {
 
 type ListGastartenBody struct {
 	XMLName xml.Name `xml:"car:listlgastarten"`
+
+	Gmdenr  string `xml:"car:gmdenr"`
+	Mandant string `xml:"car:mandant"`
 }
 
 func (r *ListGastarten) RequestBody() *ListGastartenBody {
@@ -102,7 +105,17 @@ func (r *ListGastarten) NewResponseBody() *ListGastartenResponseBody {
 }
 
 type ListGastartenResponseBody struct {
-	XMLName xml.Name `xml:"listlaendercodesResponse"`
+	XMLName xml.Name `xml:"listlgastartenResponse"`
+
+	Gastarten []struct {
+		Text           string `xml:",chardata"`
+		Bezeichnung    string `xml:"Bezeichnung,attr"`
+		Sortierung     string `xml:"Sortierung,attr"`
+		Meldewesenwert string `xml:"meldewesenwert,attr"`
+		Operator       string `xml:"Operator,attr"`
+		Alter          string `xml:"Alter,attr"`
+		Fragetext      string `xml:"Fragetext,attr"`
+	} `xml:"listlgastartenResult>gastarten>gastart"`
 }
 
 func (r *ListGastarten) URL() *url.URL {
