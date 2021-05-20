@@ -175,6 +175,8 @@ func (c *Client) GetEndpointURL(p string, pathParams PathParams) url.URL {
 func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, error) {
 	// convert body struct to xml
 	buf := new(bytes.Buffer)
+	buf.Write([]byte(xml.Header))
+
 	if req.RequestBodyInterface() != nil {
 		soapRequest := RequestEnvelope{
 			Namespaces: []xml.Attr{
