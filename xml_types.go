@@ -83,6 +83,10 @@ func (d *Date) UnmarshalJSON(text []byte) (err error) {
 	return err
 }
 
+func (d Date) IsEmpty() bool {
+	return d.IsZero()
+}
+
 type DateTime struct {
 	time.Time
 }
