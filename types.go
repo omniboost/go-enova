@@ -93,8 +93,8 @@ type Gast struct {
 	// Hobby         string `xml:"hobby,attr,omitempty"`
 	// Motiv         string `xml:"motiv,attr,omitempty"`
 	// // Titel         string `xml:"titel,attr"`
-	// Gastkartenr string `xml:"gastkartenr,attr"`
-	PersonenID string `xml:"personenid,attr"`
+	GastkarteNr string `xml:"gastkartenr,attr"`
+	PersonenID  string `xml:"personenid,attr"`
 }
 
 func (g Gast) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
