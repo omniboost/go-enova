@@ -25,16 +25,8 @@ const (
 	charset        = "utf-8"
 )
 
-var (
-	BaseURL = url.URL{
-		Scheme: "https",
-		Host:   "www.enova.net",
-		Path:   "/cardxcontrol/system/hotelxml.asmx",
-	}
-)
-
 // NewClient returns a new Exact Globe Client client
-func NewClient(httpClient *http.Client, username, password string) *Client {
+func NewClient(httpClient *http.Client) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
 	}
@@ -42,9 +34,6 @@ func NewClient(httpClient *http.Client, username, password string) *Client {
 	client := &Client{}
 
 	client.SetHTTPClient(httpClient)
-	client.SetUsername(username)
-	client.SetPassword(password)
-	client.SetBaseURL(BaseURL)
 	client.SetDebug(false)
 	client.SetUserAgent(userAgent)
 	client.SetMediaType(mediaType)
@@ -62,8 +51,12 @@ type Client struct {
 	baseURL url.URL
 
 	// credentials
-	username string
-	password string
+	dbName             string
+	dbUsername         string
+	dbPassword         string
+	externalSystemGUID string
+	tableName          string
+	schemaName         string
 
 	// User agent for client
 	userAgent string
@@ -90,20 +83,52 @@ func (c *Client) SetDebug(debug bool) {
 	c.debug = debug
 }
 
-func (c Client) Username() string {
-	return c.username
+func (c Client) DBName() string {
+	return c.dbName
 }
 
-func (c *Client) SetUsername(username string) {
-	c.username = username
+func (c *Client) SetDBName(dbName string) {
+	c.dbName = dbName
 }
 
-func (c Client) Password() string {
-	return c.password
+func (c Client) DBUsername() string {
+	return c.dbUsername
 }
 
-func (c *Client) SetPassword(password string) {
-	c.password = password
+func (c *Client) SetDBUsername(dbUsername string) {
+	c.dbUsername = dbUsername
+}
+
+func (c Client) DBPassword() string {
+	return c.dbPassword
+}
+
+func (c *Client) SetDBPassword(dbPassword string) {
+	c.dbPassword = dbPassword
+}
+
+func (c Client) ExternalSystemGUID() string {
+	return c.externalSystemGUID
+}
+
+func (c *Client) SetExternalSystemGUID(externalSystemGUID string) {
+	c.externalSystemGUID = externalSystemGUID
+}
+
+func (c Client) TableName() string {
+	return c.tableName
+}
+
+func (c *Client) SetTableName(tableName string) {
+	c.tableName = tableName
+}
+
+func (c Client) SchemaName() string {
+	return c.schemaName
+}
+
+func (c *Client) SetSchemaName(schemaName string) {
+	c.schemaName = schemaName
 }
 
 func (c Client) BaseURL() url.URL {
@@ -178,16 +203,8 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	buf.Write([]byte(xml.Header))
 
 	if req.RequestBodyInterface() != nil {
-		soapRequest := RequestEnvelope{
-			Namespaces: []xml.Attr{
-				{Name: xml.Name{Space: "", Local: "xmlns:soap"}, Value: "http://www.w3.org/2003/05/soap-envelope"},
-				{Name: xml.Name{Space: "", Local: "xmlns:car"}, Value: "http://www.enova.net"},
-			},
-			// Header: Header{},
-			Body: Body{
-				ActionBody: req.RequestBodyInterface(),
-			},
-		}
+		soapRequest := NewRequestEnvelope()
+		soapRequest.Body.ActionBody = req.RequestBodyInterface()
 
 		enc := xml.NewEncoder(buf)
 		enc.Indent("", "  ")

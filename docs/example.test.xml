@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Header>
+    <Action xmlns="http://schemas.microsoft.com/ws/2005/05/addressing/none" s:mustUnderstand="1">http://tempuri.org/IMethodInvokerService/InvokeServiceMethod</Action>
+  </s:Header>
+  <s:Body>
+    <InvokeServiceMethod xmlns="http://tempuri.org/">
+      <invokerParams xmlns:d4p1="http://schemas.datacontract.org/2004/07/Soneta.Net.Types" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <ClientAddress xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types" i:nil="true"/>
+        <ContextHandle xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types" i:nil="true"/>
+        <DatabaseHandle xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">PuroT2Kazimierz</DatabaseHandle>
+        <IpFilters xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types" i:nil="true"/>
+        <MethodArgs xmlns:d5p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">
+          <d5p1:KeyValueOfstringanyType>
+            <d5p1:Key>TableName</d5p1:Key>
+            <d5p1:Value xmlns:d7p1="http://www.w3.org/2001/XMLSchema" i:type="d7p1:string">DokEwidencja</d5p1:Value>
+          </d5p1:KeyValueOfstringanyType>
+          <d5p1:KeyValueOfstringanyType>
+            <d5p1:Key>SchemaName</d5p1:Key>
+            <d5p1:Value xmlns:d7p1="http://www.w3.org/2001/XMLSchema" i:type="d7p1:string">Protel</d5p1:Value>
+          </d5p1:KeyValueOfstringanyType>
+          <d5p1:KeyValueOfstringanyType>
+            <d5p1:Key>ResultSchemaName</d5p1:Key>
+            <d5p1:Value i:nil="true"/>
+          </d5p1:KeyValueOfstringanyType>
+          <d5p1:KeyValueOfstringanyType>
+            <d5p1:Key>ExternalSystem</d5p1:Key>
+            <d5p1:Value xmlns:d7p1="http://www.w3.org/2001/XMLSchema" i:type="d7p1:string">30fb6c15-7596-44aa-bf3f-ca3ebfe0c983</d5p1:Value>
+          </d5p1:KeyValueOfstringanyType>
+          <d5p1:KeyValueOfstringanyType>
+            <d5p1:Key>LocalRequest</d5p1:Key>
+            <d5p1:Value xmlns:d7p1="http://www.w3.org/2001/XMLSchema" i:type="d7p1:boolean">false</d5p1:Value>
+          </d5p1:KeyValueOfstringanyType>
+          <d5p1:KeyValueOfstringanyType>
+            <d5p1:Key>Data</d5p1:Key>
+            <d5p1:Value xmlns:d7p1="http://www.w3.org/2001/XMLSchema" i:type="d7p1:string">
+              <UpdateParamsData>
+                <Rows>
+                  <Row>
+                    <Xml>
+                        TEST
+                    </Xml>
+                  </Row>
+                </Rows>
+              </UpdateParamsData>
+            </d5p1:Value>
+          </d5p1:KeyValueOfstringanyType>
+          <d5p1:KeyValueOfstringanyType>
+            <d5p1:Key>SchemaParam</d5p1:Key>
+            <d5p1:Value xmlns:d7p1="http://www.w3.org/2001/XMLSchema" i:type="d7p1:string"/>
+          </d5p1:KeyValueOfstringanyType>
+        </MethodArgs>
+        <MethodName xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">Update</MethodName>
+        <Operator xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">MEWS</Operator>
+        <Password xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">7wfpBC3IbtWCiOAlDX 0m</Password>
+        <ServiceName xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">enova.Integrator.I Integrator, enova.Integrator</ServiceName>
+        <d4p1:ConnectionInfo i:nil="true"/>
+      </invokerParams>
+    </InvokeServiceMethod>
+  </s:Body>
+</s:Envelope>
