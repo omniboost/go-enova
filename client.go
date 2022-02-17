@@ -1,4 +1,4 @@
-package cardxperts
+package enova
 
 import (
 	"bytes"
@@ -20,7 +20,7 @@ import (
 
 const (
 	libraryVersion = "0.0.1"
-	userAgent      = "go-cardxperts/" + libraryVersion
+	userAgent      = "go-enova/" + libraryVersion
 	mediaType      = "application/soap+xml;charset=UTF-8"
 	charset        = "utf-8"
 )
@@ -28,7 +28,7 @@ const (
 var (
 	BaseURL = url.URL{
 		Scheme: "https",
-		Host:   "www.cardxperts.net",
+		Host:   "www.enova.net",
 		Path:   "/cardxcontrol/system/hotelxml.asmx",
 	}
 )
@@ -181,7 +181,7 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 		soapRequest := RequestEnvelope{
 			Namespaces: []xml.Attr{
 				{Name: xml.Name{Space: "", Local: "xmlns:soap"}, Value: "http://www.w3.org/2003/05/soap-envelope"},
-				{Name: xml.Name{Space: "", Local: "xmlns:car"}, Value: "http://www.cardxperts.net"},
+				{Name: xml.Name{Space: "", Local: "xmlns:car"}, Value: "http://www.enova.net"},
 			},
 			// Header: Header{},
 			Body: Body{

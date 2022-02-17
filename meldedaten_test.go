@@ -1,4 +1,4 @@
-package cardxperts_test
+package enova_test
 
 import (
 	"encoding/json"
@@ -7,39 +7,39 @@ import (
 	"testing"
 	"time"
 
-	"github.com/omniboost/go-cardxperts"
+	"github.com/omniboost/go-enova"
 )
 
 func TestMeldedaten(t *testing.T) {
 	req := client.NewMeldedatenRequest()
 	// req.RequestBody().Identifikation.Erzeugung = "2020-02-02"
 	req.RequestBody().Meldedaten.Oestat = os.Getenv("OESTAT")
-	req.RequestBody().Meldedaten.Logindaten = cardxperts.Logindaten{
+	req.RequestBody().Meldedaten.Logindaten = enova.Logindaten{
 		User:     client.Username(),
 		Mandant:  os.Getenv("MANDANT"),
 		Passwort: client.Password(),
 	}
-	req.RequestBody().Meldedaten.Betrieb = cardxperts.Betrieb{
+	req.RequestBody().Meldedaten.Betrieb = enova.Betrieb{
 		Betriebnr: os.Getenv("BETRIEBNR"),
-		Meldeblatt: cardxperts.Meldeblatt{
+		Meldeblatt: enova.Meldeblatt{
 			Mblattnr:    "",
 			ResID:       "11001",
-			Bearbeiter:  "cardxperts",
-			Abgeplant:   cardxperts.Date{Time: time.Now()},
-			Ankunft:     cardxperts.Date{Time: time.Now()},
+			Bearbeiter:  "enova",
+			Abgeplant:   enova.Date{Time: time.Now()},
+			Ankunft:     enova.Date{Time: time.Now()},
 			Aufenthalte: "3",
 			Reisegruppe: 0,
-			Landschl: []cardxperts.Landschl{{
+			Landschl: []enova.Landschl{{
 				Anzpers: 1,
 				Lschlnr: "14",
 			}},
-			Gastart: cardxperts.Gastarten{
+			Gastart: enova.Gastarten{
 				{
 					Anzpers: 1,
 					Gastart: "P",
 				},
 			},
-			Gast: cardxperts.Gasten{
+			Gast: enova.Gasten{
 				{
 					Gasttyp:       "HG",
 					Anrede:        "Fr.",
@@ -52,7 +52,7 @@ func TestMeldedaten(t *testing.T) {
 					Plz:           "1234",
 					Ort:           "Paris",
 					Ortzusatz:     "",
-					Gebdatum:      cardxperts.Date{Time: time.Now()},
+					Gebdatum:      enova.Date{Time: time.Now()},
 					Geschlecht:    "2",
 					Reisedokument: "",
 					Staatsang:     "A",

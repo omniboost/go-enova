@@ -1,4 +1,4 @@
-module github.com/omniboost/go-cardxperts
+module github.com/omniboost/go-enova
 
 go 1.15
 

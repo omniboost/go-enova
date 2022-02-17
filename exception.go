@@ -1,4 +1,4 @@
-package cardxperts
+package enova
 
 type ExceptionBlock struct {
 	ExceptionCode        string `xml:"ExceptionCode"`

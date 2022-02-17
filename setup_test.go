@@ -1,4 +1,4 @@
-package cardxperts_test
+package enova_test
 
 import (
 	"log"
@@ -6,11 +6,11 @@ import (
 	"os"
 	"testing"
 
-	cardxperts "github.com/omniboost/go-cardxperts"
+	enova "github.com/omniboost/go-enova"
 )
 
 var (
-	client *cardxperts.Client
+	client *enova.Client
 )
 
 func TestMain(m *testing.M) {
@@ -29,7 +29,7 @@ func TestMain(m *testing.M) {
 		}
 	}
 
-	client = cardxperts.NewClient(nil, username, password)
+	client = enova.NewClient(nil, username, password)
 	if debug != "" {
 		client.SetDebug(true)
 	}

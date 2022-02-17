@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:car="http://www.cardxperts.net">
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:car="http://www.enova.net">
   <soap:Header/>
   <soap:Body>
     <car:Meldedaten>
@@ -12,7 +12,7 @@
 <passwort>xxxxxxxxxx</passwort>
 </Logindaten>
 <betrieb betriebnr="1501">
-<meldeblatt mblattnr="11001" ankunft="2019-10-08" abreise="" bearbeiter="cardxperts" bemerkung=""
+<meldeblatt mblattnr="11001" ankunft="2019-10-08" abreise="" bearbeiter="enova" bemerkung=""
 aufenthalte="3" abgeplant="2019-10-11" reisegruppe="0">
 <landschl lschlnr="14" anzpers="1"/>
 <gastart gastart="P" anzpers="1"/>

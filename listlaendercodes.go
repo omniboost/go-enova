@@ -1,11 +1,11 @@
-package cardxperts
+package enova
 
 import (
 	"encoding/xml"
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-cardxperts/utils"
+	"github.com/omniboost/go-enova/utils"
 )
 
 func (c *Client) NewListlaendercodes() Listlaendercodes {

@@ -1,9 +1,9 @@
-package cardxperts
+package enova
 
 import (
 	"encoding/xml"
 
-	"github.com/omniboost/go-cardxperts/omitempty"
+	"github.com/omniboost/go-enova/omitempty"
 )
 
 type Meldedaten struct {
