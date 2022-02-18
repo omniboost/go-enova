@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <InvokeServiceMethod xmlns="http://tempuri.org/">
+      <invokerParams xmlns:a="http://schemas.datacontract.org/2004/07/Soneta.Net.Types" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <ClientAddress xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types" i:nil="true"/>
+        <ContextHandle xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types" i:nil="true"/>
+        <DatabaseHandle xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">TEST</DatabaseHandle>
+        <IpFilters xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types" i:nil="true"/>
+        <MethodArgs xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types" xmlns:b="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+          <b:KeyValueOfstringanyType>
+            <b:Key>TableName</b:Key>
+            <b:Value xmlns:c="http://www.w3.org/2001/XMLSchema" i:type="c:string">TEST</b:Value>
+          </b:KeyValueOfstringanyType>
+          <b:KeyValueOfstringanyType>
+            <b:Key>SchemaName</b:Key>
+            <b:Value xmlns:c="http://www.w3.org/2001/XMLSchema" i:type="c:string">TEST</b:Value>
+          </b:KeyValueOfstringanyType>
+          <b:KeyValueOfstringanyType>
+            <b:Key>ResultSchemaName</b:Key>
+            <b:Value i:nil="true"/>
+          </b:KeyValueOfstringanyType>
+          <b:KeyValueOfstringanyType>
+            <b:Key>ExternalSystem</b:Key>
+            <b:Value xmlns:c="http://www.w3.org/2001/XMLSchema" i:type="c:string">TEST</b:Value>
+          </b:KeyValueOfstringanyType>
+          <b:KeyValueOfstringanyType>
+            <b:Key>LocalRequest</b:Key>
+            <b:Value xmlns:c="http://www.w3.org/2001/XMLSchema" i:type="c:boolean">false</b:Value>
+          </b:KeyValueOfstringanyType>
+          <b:KeyValueOfstringanyType>
+            <b:Key>Data</b:Key>
+            <b:Value xmlns:c="http://www.w3.org/2001/XMLSchema" i:type="c:string">
+                    &lt;UpdateParamsData&gt;
+                &lt;Rows&gt;
+                  &lt;Row&gt;
+                    &lt;Xml&gt;
+                      &lt;Dokument&gt;
+                        &lt;invoice_fiscalcode&gt;112&lt;/invoice_fiscalcode&gt;
+                        &lt;Podmiot&gt;
+                          &lt;invoice_customername&gt;Smith &amp;amp;amp; Nephew Sp. z o.o.&lt;/invoice_customername&gt;
+                          &lt;invoice_customertaxid&gt;526 28 25 537&lt;/invoice_customertaxid&gt;
+                          &lt;invoice_customeraddress&gt;ul. Osma&amp;#x144;ska 12 02-823 Warszawa&lt;/invoice_customeraddress&gt;
+                          &lt;invoice_protel_customerid&gt;60024&lt;/invoice_protel_customerid&gt;
+                        &lt;/Podmiot&gt;
+                        &lt;Naglowek&gt;
+                          &lt;invoice_protel_reservationno&gt;1103664&lt;/invoice_protel_reservationno&gt;
+                          &lt;invoice_cancelled&gt;True&lt;/invoice_cancelled&gt;
+                          &lt;invoice_cancell_dt&gt;2021-06-30&lt;/invoice_cancell_dt&gt;
+                          &lt;invoice_type&gt;1&lt;/invoice_type&gt;
+                          &lt;invoice_nostr&gt;25103/05/2021&lt;/invoice_nostr&gt;
+                          &lt;invoice_saledate&gt;2021-05-18&lt;/invoice_saledate&gt;
+                          &lt;invoice_issuedate&gt;2021-05-19&lt;/invoice_issuedate&gt;
+                          &lt;invoice_id&gt;691442&lt;/invoice_id&gt;
+                          &lt;invoice_note1&gt;Chmarek Jacek&lt;/invoice_note1&gt;
+                          &lt;invoice_note2&gt;Chmarek Jacek1&lt;/invoice_note2&gt;
+                          &lt;invoice_note3/&gt;
+                          &lt;invoice_property_name&gt;Puro Hotel Warszawa&lt;/invoice_property_name&gt;
+                          &lt;invoice_propertyid&gt;9&lt;/invoice_propertyid&gt;
+                          &lt;invoice_gtu/&gt;
+                          &lt;invoice_dfeature/&gt;
+                          &lt;invoice_protel_datefrom&gt;2021-05-18&lt;/invoice_protel_datefrom&gt;
+                          &lt;invoice_protel_dateto&gt;2021-05-19&lt;/invoice_protel_dateto&gt;
+                        &lt;/Naglowek&gt;
+                        &lt;LinkedDocument&gt;
+                          &lt;CorrectedDocuments&gt;
+                            &lt;CorrectedDocument&gt;
+                              &lt;invoice_originalinvoicenostr&gt;39943/02/2021&lt;/invoice_originalinvoicenostr&gt;
+                            &lt;/CorrectedDocument&gt;
+                          &lt;/CorrectedDocuments&gt;
+                        &lt;/LinkedDocument&gt;
+                        &lt;VAT&gt;
+                          &lt;VATTable&gt;
+                            &lt;VATTableItem&gt;
+                              &lt;VATRate&gt;
+                                &lt;invoicevat_vatcode&gt;B&lt;/invoicevat_vatcode&gt;
+                                &lt;invoicevat_vatrate&gt;8,00&lt;/invoicevat_vatrate&gt;
+                              &lt;/VATRate&gt;
+                              &lt;invoicevat_vatamount&gt;27,41&lt;/invoicevat_vatamount&gt;
+                              &lt;invoicevat_grossamount&gt;370,00&lt;/invoicevat_grossamount&gt;
+                              &lt;invoicedtl_currency&gt;PLN&lt;/invoicedtl_currency&gt;
+                              &lt;invoicevat_vatcurrencyamount&gt;27,41&lt;/invoicevat_vatcurrencyamount&gt;
+                              &lt;invoicedtl_grosscurrencyamount&gt;370,00&lt;/invoicedtl_grosscurrencyamount&gt;
+                              &lt;invoicevat_id&gt;961519&lt;/invoicevat_id&gt;
+                              &lt;invoicevat_invoiceid&gt;691442&lt;/invoicevat_invoiceid&gt;
+                              &lt;invoicevat_itemtype&gt;2&lt;/invoicevat_itemtype&gt;
+                              &lt;invoicevat_vatratetxt&gt;8.00&lt;/invoicevat_vatratetxt&gt;
+                            &lt;/VATTableItem&gt;
+                            &lt;VATTableItem&gt;
+                              &lt;VATRate&gt;
+                                &lt;invoicevat_vatcode&gt;A&lt;/invoicevat_vatcode&gt;
+                                &lt;invoicevat_vatrate&gt;23,00&lt;/invoicevat_vatrate&gt;
+                              &lt;/VATRate&gt;
+                              &lt;invoicevat_vatamount&gt;18,70&lt;/invoicevat_vatamount&gt;
+                              &lt;invoicevat_grossamount&gt;100,00&lt;/invoicevat_grossamount&gt;
+                              &lt;invoicedtl_currency&gt;PLN&lt;/invoicedtl_currency&gt;
+                              &lt;invoicevat_vatcurrencyamount&gt;18,70&lt;/invoicevat_vatcurrencyamount&gt;
+                              &lt;invoicedtl_grosscurrencyamount&gt;100,00&lt;/invoicedtl_grosscurrencyamount&gt;
+                              &lt;invoicevat_id&gt;961520&lt;/invoicevat_id&gt;
+                              &lt;invoicevat_invoiceid&gt;691442&lt;/invoicevat_invoiceid&gt;
+                              &lt;invoicevat_itemtype&gt;2&lt;/invoicevat_itemtype&gt;
+                              &lt;invoicevat_vatratetxt&gt;23.00&lt;/invoicevat_vatratetxt&gt;
+                            &lt;/VATTableItem&gt;
+                          &lt;/VATTable&gt;
+                        &lt;/VAT&gt;
+                        &lt;payments&gt;
+                          &lt;Payment&gt;
+                            &lt;invoicedtl_currency&gt;PLN&lt;/invoicedtl_currency&gt;
+                            &lt;invoicedtl_grosscurrencyamount&gt;470&lt;/invoicedtl_grosscurrencyamount&gt;
+                            &lt;invoice_duedate&gt;2021-05-19&lt;/invoice_duedate&gt;
+                            &lt;invoicedtl_postingtext&gt;Karta kredytowa&lt;/invoicedtl_postingtext&gt;
+                            &lt;invoicedtl_postdate&gt;2021-05-19&lt;/invoicedtl_postdate&gt;
+                            &lt;invoice_cc/&gt;
+                            &lt;invoicedtl_realdate&gt;2021-05-19&lt;/invoicedtl_realdate&gt;
+                            &lt;invoicedtl_reservationid&gt;1103664&lt;/invoicedtl_reservationid&gt;
+                            &lt;invoicedtl_id&gt;4672384&lt;/invoicedtl_id&gt;
+                            &lt;invoicedtl_deposit&gt;false&lt;/invoicedtl_deposit&gt;
+                            &lt;invoicedtl_payment&gt;true&lt;/invoicedtl_payment&gt;
+                            &lt;invoicedtl_invoiceid&gt;691442&lt;/invoicedtl_invoiceid&gt;
+                          &lt;/Payment&gt;
+                        &lt;/payments&gt;
+                        &lt;OpisAnalityczny&gt;
+                          &lt;ElementOpisu&gt;
+                            &lt;invoicedtl_vatamount&gt;18,7&lt;/invoicedtl_vatamount&gt;
+                            &lt;invoicedtl_currency&gt;PLN&lt;/invoicedtl_currency&gt;
+                            &lt;invoicedtl_grosscurrencyamount&gt;100&lt;/invoicedtl_grosscurrencyamount&gt;
+                            &lt;invoicedtl_grossamount&gt;100&lt;/invoicedtl_grossamount&gt;
+                            &lt;invoicedtl_originid&gt;1103664&lt;/invoicedtl_originid&gt;
+                            &lt;invoicedtl_paymentaccount/&gt;
+                            &lt;invoicedtl_realdate&gt;2021-05-18&lt;/invoicedtl_realdate&gt;
+                            &lt;invoicedtl_postingaddtext/&gt;
+                            &lt;invoicedtl_postingtext&gt;Parking (Parking)&lt;/invoicedtl_postingtext&gt;
+                            &lt;invoicedtl_protel_paymentname/&gt;
+                            &lt;invoicedtl_protel_transname&gt;Parking (Parking)&lt;/invoicedtl_protel_transname&gt;
+                            &lt;invoicedtl_quantity&gt;1&lt;/invoicedtl_quantity&gt;
+                            &lt;invoicedtl_reservationid&gt;1103664&lt;/invoicedtl_reservationid&gt;
+                            &lt;invoicedtl_transaccount/&gt;
+                            &lt;invoicedtl_vatcode&gt;A&lt;/invoicedtl_vatcode&gt;
+                            &lt;invoicedtl_vatcurrencyamount&gt;18,7&lt;/invoicedtl_vatcurrencyamount&gt;
+                            &lt;invoicedtl_id&gt;4672381&lt;/invoicedtl_id&gt;
+                            &lt;invoicedtl_sourcetransactionid&gt;6&lt;/invoicedtl_sourcetransactionid&gt;
+                            &lt;invoicedtl_postdate&gt;2021-05-18&lt;/invoicedtl_postdate&gt;
+                            &lt;invoicedtl_deposit&gt;false&lt;/invoicedtl_deposit&gt;
+                            &lt;invoicedtl_payment&gt;false&lt;/invoicedtl_payment&gt;
+                            &lt;invoicedtl_invoiceid&gt;691442&lt;/invoicedtl_invoiceid&gt;
+                          &lt;/ElementOpisu&gt;
+                          &lt;ElementOpisu&gt;
+                            &lt;invoicedtl_vatamount&gt;2,96&lt;/invoicedtl_vatamount&gt;
+                            &lt;invoicedtl_currency&gt;PLN&lt;/invoicedtl_currency&gt;
+                            &lt;invoicedtl_grosscurrencyamount&gt;40&lt;/invoicedtl_grosscurrencyamount&gt;
+                            &lt;invoicedtl_grossamount&gt;40&lt;/invoicedtl_grossamount&gt;
+                            &lt;invoicedtl_originid&gt;1103664&lt;/invoicedtl_originid&gt;
+                            &lt;invoicedtl_paymentaccount/&gt;
+                            &lt;invoicedtl_realdate&gt;2021-05-18&lt;/invoicedtl_realdate&gt;
+                            &lt;invoicedtl_postingaddtext&gt;18/05/21/#418&lt;/invoicedtl_postingaddtext&gt;
+                            &lt;invoicedtl_postingtext&gt;Us&amp;#x142;uga noclegowa (Accommodation)&lt;/invoicedtl_postingtext&gt;
+                            &lt;invoicedtl_protel_paymentname/&gt;
+                            &lt;invoicedtl_protel_transname&gt;&amp;#x15A;niadanie (Breakfast)&lt;/invoicedtl_protel_transname&gt;
+                            &lt;invoicedtl_quantity&gt;1&lt;/invoicedtl_quantity&gt;
+                            &lt;invoicedtl_reservationid&gt;1103664&lt;/invoicedtl_reservationid&gt;
+                            &lt;invoicedtl_transaccount/&gt;
+                            &lt;invoicedtl_vatcode&gt;B&lt;/invoicedtl_vatcode&gt;
+                            &lt;invoicedtl_vatcurrencyamount&gt;2,96&lt;/invoicedtl_vatcurrencyamount&gt;
+                            &lt;invoicedtl_id&gt;4672382&lt;/invoicedtl_id&gt;
+                            &lt;invoicedtl_sourcetransactionid&gt;132&lt;/invoicedtl_sourcetransactionid&gt;
+                            &lt;invoicedtl_postdate&gt;2021-05-18&lt;/invoicedtl_postdate&gt;
+                            &lt;invoicedtl_deposit&gt;false&lt;/invoicedtl_deposit&gt;
+                            &lt;invoicedtl_payment&gt;false&lt;/invoicedtl_payment&gt;
+                            &lt;invoicedtl_invoiceid&gt;691442&lt;/invoicedtl_invoiceid&gt;
+                          &lt;/ElementOpisu&gt;
+                          &lt;ElementOpisu&gt;
+                            &lt;invoicedtl_vatamount&gt;24,45&lt;/invoicedtl_vatamount&gt;
+                            &lt;invoicedtl_currency&gt;PLN&lt;/invoicedtl_currency&gt;
+                            &lt;invoicedtl_grosscurrencyamount&gt;330&lt;/invoicedtl_grosscurrencyamount&gt;
+                            &lt;invoicedtl_grossamount&gt;330&lt;/invoicedtl_grossamount&gt;
+                            &lt;invoicedtl_originid&gt;1103664&lt;/invoicedtl_originid&gt;
+                            &lt;invoicedtl_paymentaccount/&gt;
+                            &lt;invoicedtl_realdate&gt;2021-05-18&lt;/invoicedtl_realdate&gt;
+                            &lt;invoicedtl_postingaddtext&gt;18/05/21/#418&lt;/invoicedtl_postingaddtext&gt;
+                            &lt;invoicedtl_postingtext&gt;Us&amp;#x142;uga noclegowa (Accommodation)&lt;/invoicedtl_postingtext&gt;
+                            &lt;invoicedtl_protel_paymentname/&gt;
+                            &lt;invoicedtl_protel_transname&gt;Us&amp;#x142;uga noclegowa (Accommodation)&lt;/invoicedtl_protel_transname&gt;
+                            &lt;invoicedtl_quantity&gt;1&lt;/invoicedtl_quantity&gt;
+                            &lt;invoicedtl_reservationid&gt;1103664&lt;/invoicedtl_reservationid&gt;
+                            &lt;invoicedtl_transaccount/&gt;
+                            &lt;invoicedtl_vatcode&gt;B&lt;/invoicedtl_vatcode&gt;
+                            &lt;invoicedtl_vatcurrencyamount&gt;24,44&lt;/invoicedtl_vatcurrencyamount&gt;
+                            &lt;invoicedtl_id&gt;4672383&lt;/invoicedtl_id&gt;
+                            &lt;invoicedtl_sourcetransactionid&gt;1&lt;/invoicedtl_sourcetransactionid&gt;
+                            &lt;invoicedtl_postdate&gt;2021-05-18&lt;/invoicedtl_postdate&gt;
+                            &lt;invoicedtl_deposit&gt;false&lt;/invoicedtl_deposit&gt;
+                            &lt;invoicedtl_payment&gt;false&lt;/invoicedtl_payment&gt;
+                            &lt;invoicedtl_invoiceid&gt;691442&lt;/invoicedtl_invoiceid&gt;
+                          &lt;/ElementOpisu&gt;
+                        &lt;/OpisAnalityczny&gt;
+                        &lt;Attachments&gt;
+                          &lt;Attachment&gt;
+                            &lt;invoice_no&gt;25103&lt;/invoice_no&gt;
+                            &lt;pdf_link&gt;Hotel 9\112\00025103.pdf&lt;/pdf_link&gt;
+                          &lt;/Attachment&gt;
+                        &lt;/Attachments&gt;
+                      &lt;/Dokument&gt;
+                    &lt;/Xml&gt;
+                  &lt;/Row&gt;
+                &lt;/Rows&gt;
+              &lt;/UpdateParamsData&gt;
+</b:Value>
+          </b:KeyValueOfstringanyType>
+          <b:KeyValueOfstringanyType>
+            <b:Key>SchemaParam</b:Key>
+            <b:Value xmlns:c="http://www.w3.org/2001/XMLSchema" i:type="c:string"/>
+          </b:KeyValueOfstringanyType>
+        </MethodArgs>
+        <MethodName xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">Update</MethodName>
+        <Operator xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">MEWS</Operator>
+        <Password xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">7wfpBC3IbtWCiOAlDX0m</Password>
+        <ServiceName xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">enova.Integrator.IIntegrator, enova.Integrator</ServiceName>
+        <a:ConnectionInfo i:nil="true"/>
+      </invokerParams>
+    </InvokeServiceMethod>
+  </s:Body>
+</s:Envelope>
