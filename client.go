@@ -21,7 +21,7 @@ import (
 const (
 	libraryVersion = "0.0.1"
 	userAgent      = "go-enova/" + libraryVersion
-	mediaType      = "application/soap+xml;charset=UTF-8"
+	mediaType      = "text/xml"
 	charset        = "utf-8"
 )
 
@@ -221,6 +221,8 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 
 	// create new http request
 	r, err := http.NewRequest(req.Method(), req.URL().String(), buf)
+	// f, _ := os.Open("test.xml")
+	// r, err := http.NewRequest(req.Method(), req.URL().String(), f)
 	if err != nil {
 		return nil, err
 	}
@@ -240,9 +242,7 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	r.Header.Add("Content-Type", fmt.Sprintf("%s; charset=%s", c.MediaType(), c.Charset()))
 	r.Header.Add("Accept", c.MediaType())
 	r.Header.Add("User-Agent", c.UserAgent())
-	// r.Header.Add("SOAPAction", fmt.Sprintf("http://tempuri.org/RLXSOAP19/RLXSOAP19/%s", req.SOAPAction()))
-	// r.Header.Add("SOAPAction", "urn:oracle:getKonfigurationsListe")
-	// r.Header.Add("SOAPAction", "urn:oracle:holeMeldescheine")
+	r.Header.Add("SOAPAction", "http://tempuri.org/IMethodInvokerService/InvokeServiceMethod")
 
 	return r, nil
 }

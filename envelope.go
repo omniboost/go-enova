@@ -7,21 +7,21 @@ import (
 type RequestEnvelope struct {
 	XMLName xml.Name
 
-	Header Header `xml:"s:Header"`
-	Body   Body   `xml:"s:Body"`
+	// Header Header `xml:"s:Header"`
+	Body Body `xml:"s:Body"`
 }
 
 func NewRequestEnvelope() RequestEnvelope {
 	return RequestEnvelope{
-		Header: NewHeader(),
+		// Header: NewHeader(),
 	}
 }
 
 type ResponseEnvelope struct {
 	XMLName xml.Name
 
-	Header Header `xml:"Header"`
-	Body   Body   `xml:"Body"`
+	// Header Header `xml:"Header"`
+	Body Body `xml:"Body"`
 }
 
 func (env RequestEnvelope) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -43,30 +43,11 @@ type Body struct {
 	ActionBody interface{} `xml:",any"`
 }
 
-type Header struct {
-	Action Action `xml:"Action"`
-}
+// type Header struct {
+// }
 
-type Action string
-
-func (act Action) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	namespaces := []xml.Attr{
-		{Name: xml.Name{Space: "", Local: "xmlns"}, Value: "http://schemas.microsoft.com/ws/2005/05/addressing/none"},
-	}
-	for _, ns := range namespaces {
-		start.Attr = append(start.Attr, ns)
-	}
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "s:mustUnderstand"}, Value: "1"})
-
-	type alias Action
-	a := alias(act)
-	return e.EncodeElement(a, start)
-}
-
-func NewHeader() Header {
-	return Header{
-		Action: Action("http://tempuri.org/IMethodInvokerService/InvokeServiceMethod"),
-	}
-}
+// func NewHeader() Header {
+// 	return Header{}
+// }
 
 type ActionBody interface{}

@@ -11,7 +11,7 @@ import (
 func TestInvokeServiceMethod(t *testing.T) {
 	req := client.NewInvokeServiceMethodRequest()
 	req.RequestBody().InvokerParams.DatabaseHandle = enova.DatabaseHandle(client.DBName())
-	req.RequestBody().InvokerParams.MethodName = enova.MethodName("UPDATE")
+	req.RequestBody().InvokerParams.MethodName = enova.MethodName("Update")
 	req.RequestBody().InvokerParams.Operator = enova.Operator(client.DBUsername())
 	req.RequestBody().InvokerParams.Password = enova.Password(client.DBPassword())
 	req.RequestBody().InvokerParams.MethodArgs = enova.MethodArgs{
@@ -19,7 +19,7 @@ func TestInvokeServiceMethod(t *testing.T) {
 		"SchemaName":     client.SchemaName(),
 		"ExternalSystem": client.ExternalSystemGUID(),
 		"Data": enova.UpdateParamsData{
-			Rows: enova.Rows{enova.Row{XML: "FML"}},
+			Rows: enova.Rows{enova.Row{XML: "<Dokument />"}},
 		},
 	}
 	resp, err := req.Do()

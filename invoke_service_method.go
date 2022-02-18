@@ -79,7 +79,11 @@ func (r *InvokeServiceMethodRequest) Method() string {
 }
 
 func (r InvokeServiceMethodRequest) NewRequestBody() InvokeServiceMethodRequestBody {
-	return InvokeServiceMethodRequestBody{}
+	return InvokeServiceMethodRequestBody{
+		InvokerParams: InvokerParams{
+			ServiceName: "enova.Integrator.IIntegrator, enova.Integrator",
+		},
+	}
 }
 
 type InvokeServiceMethodRequestBody struct {
@@ -117,10 +121,11 @@ type InvokerParams struct {
 	// 	Xmlns string `xml:"xmlns,attr"`
 	// 	Nil   string `xml:"nil,attr"`
 	// } `xml:"IpFilters"`
-	MethodArgs MethodArgs `xml:"MethodArgs"`
-	MethodName MethodName `xml:"MethodName"`
-	Operator   Operator   `xml:"Operator"`
-	Password   Password   `xml:"Password"`
+	MethodArgs  MethodArgs  `xml:"MethodArgs"`
+	MethodName  MethodName  `xml:"MethodName"`
+	Operator    Operator    `xml:"Operator"`
+	Password    Password    `xml:"Password"`
+	ServiceName ServiceName `xml:"ServiceName"`
 	// ServiceName struct {
 	// 	Xmlns string `xml:"xmlns,attr"`
 	// } `xml:"ServiceName"`

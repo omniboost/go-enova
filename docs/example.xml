@@ -41,9 +41,9 @@
                       <Dokument>
                         <invoice_fiscalcode>112</invoice_fiscalcode>
                         <Podmiot>
-                          <invoice_customername>Smith &amp;amp; Nephew Sp. z o.o.</invoice_customername>
+                          <invoice_customername>Smith &amp;amp;amp; Nephew Sp. z o.o.</invoice_customername>
                           <invoice_customertaxid>526 28 25 537</invoice_customertaxid>
-                          <invoice_customeraddress>ul. Osma&#x144;ska 12 02-823 Warszawa</invoice_customeraddress>
+                          <invoice_customeraddress>ul. Osma&amp;#x144;ska 12 02-823 Warszawa</invoice_customeraddress>
                           <invoice_protel_customerid>60024</invoice_protel_customerid>
                         </Podmiot>
                         <Naglowek>
@@ -156,9 +156,9 @@
                             <invoicedtl_paymentaccount/>
                             <invoicedtl_realdate>2021-05-18</invoicedtl_realdate>
                             <invoicedtl_postingaddtext>18/05/21/#418</invoicedtl_postingaddtext>
-                            <invoicedtl_postingtext>Us&#x142;uga noclegowa (Accommodation)</invoicedtl_postingtext>
+                            <invoicedtl_postingtext>Us&amp;#x142;uga noclegowa (Accommodation)</invoicedtl_postingtext>
                             <invoicedtl_protel_paymentname/>
-                            <invoicedtl_protel_transname>&#x15A;niadanie (Breakfast)</invoicedtl_protel_transname>
+                            <invoicedtl_protel_transname>&amp;#x15A;niadanie (Breakfast)</invoicedtl_protel_transname>
                             <invoicedtl_quantity>1</invoicedtl_quantity>
                             <invoicedtl_reservationid>1103664</invoicedtl_reservationid>
                             <invoicedtl_transaccount/>
@@ -180,9 +180,9 @@
                             <invoicedtl_paymentaccount/>
                             <invoicedtl_realdate>2021-05-18</invoicedtl_realdate>
                             <invoicedtl_postingaddtext>18/05/21/#418</invoicedtl_postingaddtext>
-                            <invoicedtl_postingtext>Us&#x142;uga noclegowa (Accommodation)</invoicedtl_postingtext>
+                            <invoicedtl_postingtext>Us&amp;#x142;uga noclegowa (Accommodation)</invoicedtl_postingtext>
                             <invoicedtl_protel_paymentname/>
-                            <invoicedtl_protel_transname>Us&#x142;uga noclegowa (Accommodation)</invoicedtl_protel_transname>
+                            <invoicedtl_protel_transname>Us&amp;#x142;uga noclegowa (Accommodation)</invoicedtl_protel_transname>
                             <invoicedtl_quantity>1</invoicedtl_quantity>
                             <invoicedtl_reservationid>1103664</invoicedtl_reservationid>
                             <invoicedtl_transaccount/>
@@ -216,8 +216,8 @@
         </MethodArgs>
         <MethodName xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">Update</MethodName>
         <Operator xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">MEWS</Operator>
-        <Password xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">7wfpBC3IbtWCiOAlDX 0m</Password>
-        <ServiceName xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">enova.Integrator.I Integrator, enova.Integrator</ServiceName>
+        <Password xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">7wfpBC3IbtWCiOAlDX0m</Password>
+        <ServiceName xmlns="http://schemas.datacontract.org/2004/07/Soneta.Types">enova.Integrator.IIntegrator, enova.Integrator</ServiceName>
         <d4p1:ConnectionInfo i:nil="true"/>
       </invokerParams>
     </InvokeServiceMethod>
