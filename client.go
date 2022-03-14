@@ -299,14 +299,20 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 		},
 	}
 
-	soapError := SoapError{}
+	soapError := &SoapError{}
+	errResponse := ResponseEnvelope{
+		// Header: Header{},
+		Body: Body{
+			ActionBody: soapError,
+		},
+	}
 
-	err = c.Unmarshal(httpResp.Body, &soapResponse, &soapError)
+	err = c.Unmarshal(httpResp.Body, &errResponse, &soapResponse)
 	if err != nil {
 		return httpResp, err
 	}
 
-	if soapError.Body.Fault.FaultCode != "" || soapError.Body.Fault.FaultString != "" {
+	if soapError.Error() != "" {
 		return httpResp, &ErrorResponse{Response: httpResp, Err: soapError}
 	}
 
@@ -397,43 +403,30 @@ func CheckResponse(r *http.Response) error {
 	return nil
 }
 
-// <?xml version="1.0" encoding="UTF-8"?>
-// <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
-//   <S:Body>
-//     <ns0:holeMeldescheineResponse xmlns:ns0="http://www.avs.meldeschein.de/ns/">
-//       <fehlermeldungen>
-//         <fehler>
-//           <code>10000</code>
-//           <beschreibung>Unerwarteter technischer Fehler!</beschreibung>
-//           <bezug>Meldeschein-Buchungsnummer: 10820</bezug>
-//         </fehler>
-//       </fehlermeldungen>
-//     </ns0:holeMeldescheineResponse>
-//   </S:Body>
-// </S:Envelope>
-
-// <?xml version="1.0" encoding="UTF-8"?>
-// <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
-//   <S:Body>
-//     <ns0:Fault xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.w3.org/2003/05/soap-envelope">
-//       <faultcode>ns0:Client</faultcode>
-//       <faultstring>Verteilungsmethode für {}holeMeldescheineRequest kann nicht gefunden werden</faultstring>
-//     </ns0:Fault>
-//   </S:Body>
-// </S:Envelope>
+// <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+//   <s:Body>
+//     <InvokeServiceMethodResponse xmlns="http://tempuri.org/">
+//       <InvokeServiceMethodResult xmlns:a="http://schemas.datacontract.org/2004/07/Soneta.Net.Types" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+//         <a:ExceptionMessage>Brak aktywnej definicji schematu o nazwie '&lt;string&gt;Protel&lt;/string&gt;' dla tabeli '&lt;string&gt;DokEwidencja&lt;/string&gt;.</a:ExceptionMessage>
+//         <a:IsEmpty>true</a:IsEmpty>
+//         <a:IsException>true</a:IsException>
+//         <a:ResultInstance i:nil="true"/>
+//       </InvokeServiceMethodResult>
+//     </InvokeServiceMethodResponse>
+//   </s:Body>
+// </s:Envelope>
 
 type SoapError struct {
-	XMLName xml.Name `xml:"Envelope"`
-	Body    struct {
-		Fault struct {
-			FaultCode   string `xml:"faultcode"`
-			FaultString string `xml:"faultstring"`
-		} `xml:"Fault"`
-	} `xml:"Body"`
+	Result struct {
+		ExceptionMessage string   `xml:"ExceptionMessage"`
+		IsEmpty          bool     `xml:"IsEmpty"`
+		IsException      bool     `xml:"IsException"`
+		ResultInstance   struct{} `xml:"ResultInstance"`
+	} `xml:"InvokeServiceMethodResult"`
 }
 
 func (e SoapError) Error() string {
-	return fmt.Sprintf("%s: %s", e.Body.Fault.FaultCode, e.Body.Fault.FaultString)
+	return e.Result.ExceptionMessage
 }
 
 type ErrorResponse struct {

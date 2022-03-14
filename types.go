@@ -7,7 +7,7 @@ import (
 type UpdateParamsData struct {
 	XMLName xml.Name `xml:"UpdateParamsData"`
 
-	Rows Rows `xml:"Rows>Row"`
+	Rows Rows `xml:"Rows>Row>Xml>XMLName"`
 }
 
 func (d UpdateParamsData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -18,11 +18,9 @@ func (d UpdateParamsData) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		return err
 	}
 
-	return e.EncodeElement(b, start)
+	return e.EncodeElement(string(b), start)
 }
 
 type Rows []Row
 
-type Row struct {
-	XML interface{} `xml:"Xml"`
-}
+type Row interface{}
