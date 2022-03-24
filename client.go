@@ -12,6 +12,7 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"path"
+	"reflect"
 	"strings"
 	"text/template"
 
@@ -316,6 +317,10 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 		return httpResp, &ErrorResponse{Response: httpResp, Err: soapError}
 	}
 
+	if soapError.Result.ResultInstance.Error() != "" {
+		return httpResp, &ErrorResponse{Response: httpResp, Err: soapError.Result.ResultInstance}
+	}
+
 	// if len(errorResponse.Messages) > 0 {
 	// 	return httpResp, errorResponse
 	// }
@@ -418,10 +423,10 @@ func CheckResponse(r *http.Response) error {
 
 type SoapError struct {
 	Result struct {
-		ExceptionMessage string   `xml:"ExceptionMessage"`
-		IsEmpty          bool     `xml:"IsEmpty"`
-		IsException      bool     `xml:"IsException"`
-		ResultInstance   struct{} `xml:"ResultInstance"`
+		ExceptionMessage string         `xml:"ExceptionMessage"`
+		IsEmpty          bool           `xml:"IsEmpty"`
+		IsException      bool           `xml:"IsException"`
+		ResultInstance   ResultInstance `xml:"ResultInstance"`
 	} `xml:"InvokeServiceMethodResult"`
 }
 
@@ -449,4 +454,50 @@ func checkContentType(response *http.Response) error {
 	}
 
 	return nil
+}
+
+type ResultInstance struct {
+	UpdateResult struct {
+		XMLName xml.Name `xml:"UpdateResult"`
+
+		Rows struct {
+			Row struct {
+				Text        string `xml:",chardata"`
+				No          string `xml:"No"`
+				ID          string `xml:"ID"`
+				Guid        string `xml:"Guid"`
+				Metadata    string `xml:"Metadata"`
+				XML         string `xml:"Xml"`
+				Message     string `xml:"Message"`
+				MessageType string `xml:"MessageType"`
+			} `xml:"Row"`
+		} `xml:"Rows"`
+	} `xml:"UpdateResult"`
+}
+
+func (r ResultInstance) Error() string {
+	if r.UpdateResult.Rows.Row.Message != "" || r.UpdateResult.Rows.Row.MessageType != "" {
+		return fmt.Sprintf("%s: %s", r.UpdateResult.Rows.Row.MessageType, r.UpdateResult.Rows.Row.Message)
+	}
+	return ""
+}
+
+func (r *ResultInstance) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
+	t, err := dec.Token()
+	if err != nil {
+		return err
+	}
+
+	b, ok := t.(xml.CharData)
+	if !ok {
+		return fmt.Errorf("Expected chardata, got: %s", reflect.TypeOf(t))
+	}
+
+	type alias ResultInstance
+	r2 := alias(*r)
+	log.Println(string(b))
+	dec2 := xml.NewDecoder(bytes.NewReader(b))
+	err = dec2.DecodeElement(&r2, &start)
+	*r = ResultInstance(r2)
+	return err
 }
