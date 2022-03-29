@@ -476,7 +476,7 @@ type ResultInstance struct {
 }
 
 func (r ResultInstance) Error() string {
-	if r.UpdateResult.Rows.Row.Message != "" || r.UpdateResult.Rows.Row.MessageType != "" {
+	if r.UpdateResult.Rows.Row.Message != "" {
 		return fmt.Sprintf("%s: %s", r.UpdateResult.Rows.Row.MessageType, r.UpdateResult.Rows.Row.Message)
 	}
 	return ""
